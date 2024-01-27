@@ -1,0 +1,152 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: rgb(255, 207, 245);
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+/* navbar */
+.navbar {
+  display: flex;
+  background-color: white;
+  border-bottom: 2px solid black;
+  overflow: hidden;
+}
+
+.navbar a {
+  float: left;
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.navbar a:hover {
+  background-color: black;
+  color: white;
+}
+
+.navbar .current-page {
+  background-color: black;
+  color: white;
+}
+
+.leftbar {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  gap: 20px;
+  flex-direction: row;
+}
+
+.rightbar {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  gap: 20px;
+  flex-direction: row;
+}
+
+.gap {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  flex-grow: 1;
+  flex-direction: row;
+}
+
+/* content */
+.content {
+  margin-top: 1%;
+  margin-left: 15%;
+  margin-right: 15%;
+}
+
+.topContent {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.sideContent {
+  margin-left: 1%;
+}
+
+.sideContent h1 {
+  font-size: 150px;
+  /*background-color: red;*/
+}
+
+/* Portfolio */
+.arbor {
+  background-color: white;
+}
+
+.projBox {
+  margin-bottom: 1%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 19px;
+}
+
+.proj {
+  margin-left: 1%;
+}
+
+/* Qualifications */
+.splitBox {
+  margin-top: 1%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.splitItem {
+  flex: 1;
+}
+
+/* Style for AI class */
+.ai {
+  max-width: 800px;
+  margin: 20px auto;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.ai h1,
+.ai h2 {
+  color: #333;
+}
+
+.ai p {
+  color: #555;
+  line-height: 1.5;
+}
+
+.ai ul {
+  list-style-type: disc;
+  color: #555;
+  margin-left: 20px;
+}
+
+.ai table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.ai th,
+.ai td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.ai th {
+  background-color: #333;
+  color: white;
+}
