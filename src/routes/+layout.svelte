@@ -3,6 +3,7 @@
   import { invalidate } from "$app/navigation";
   import { onMount } from "svelte";
   import type { LayoutData } from "./$types";
+  import "../style.css";
   export let data: LayoutData;
   $: ({ supabase, session } = data);
   onMount(() => {

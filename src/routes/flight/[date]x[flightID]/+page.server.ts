@@ -1,22 +1,22 @@
-import type { Database } from "$lib/db/types.js";
-
-export const load: PageLoad = async ({
-  parent,
-  data,
-  locals: { supabase },
-}) => {
+export const load: PageLoad = async ({ params, parent }) => {
   const { session } = await parent();
   const uid = session?.user.id;
-  const { data: seatInfo, error } = await supabase
-    .from("seats")
-    .select("flightnumber, date, seatnumber")
-    .eq("profile_id", uid);
 
-  console.log(error);
+  const flight = params.flightID;
+  const url = "http://localhost:4000/airports?code=";
+
+  fetch(url)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then((data) => console.log(data))
+    .catch((error) => console.error("Error:", error));
 
   return {
-    session,
-    seatInfo,
+    uid,
   };
 };
 
