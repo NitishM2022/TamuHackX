@@ -64,14 +64,13 @@
       <span>Taken Seat (You Can Request)</span>
     </div>
   </div>
-  <table style="border-collapse: collapse; border-radius: 5px; ">
+  <table
+    style="border-collapse: separate; border-spacing: 10px; border-radius: 5px;"
+  >
     <thead>
       <tr>
-        <th style="border: none; padding: 10px; ">Window</th>
-        <th
-          style="border: none; padding-left: 10px; padding-right: 10px; background-color: rgb(230, 230, 230);"
-          >Middle</th
-        >
+        <th style="border: none; padding: 10px;">Window</th>
+        <th style="border: none; padding: 10px;">Middle</th>
         <th style="border: none; padding: 10px;">Window</th>
       </tr>
     </thead>
@@ -81,6 +80,13 @@
     <tbody style="border: none;">
       {#each { length: rows } as _, i}
         <tr style="border: none;">
+          <td style="border: none; height: 100%;">
+            <button
+              style="background-color: lightblue; border: 2px solid lightblue;  width: 33.33%; height: 60px; border-radius:50px"
+              disabled
+            />
+          </td>
+
           {#each { length: 9 } as _, j}
             {#if sameSeat(i, j)}
               <td style="border: none;">
@@ -115,6 +121,12 @@
               </td>
             {/if}
           {/each}
+          <td style="border: none; height: 100%;">
+            <button
+              style="background-color: lightblue; border: 2px solid lightblue;  width: 33.33%; height: 60px; border-radius:50px"
+              disabled
+            />
+          </td>
         </tr>
       {/each}
     </tbody>
@@ -164,14 +176,5 @@
     border: 1px solid #ddd;
     padding: 8px;
     text-align: center;
-  }
-  th {
-    background-color: #f2f2f2;
-  }
-  .yourSeat {
-    color: green;
-  }
-  .takenSeat {
-    color: red;
   }
 </style>

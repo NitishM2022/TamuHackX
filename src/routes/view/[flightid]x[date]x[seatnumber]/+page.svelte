@@ -43,10 +43,9 @@
       <span>Your Seat</span>
     </div>
   </div>
-
   <!-- Heading -->
   <table
-    style="border-collapse: collapse; border-radius: 5px; text-align: center;"
+    style="border-collapse: separate; border-spacing: 10px; border-radius: 5px; text-align: center;"
   >
     <thead>
       <tr>
@@ -70,6 +69,12 @@
     <tbody style="border: none;">
       {#each { length: rows } as _, i}
         <tr style="border: none;">
+          <td style="border: none; height: 100%;">
+            <button
+              style="background-color: lightblue; border: 2px solid lightblue;  width: 33.33%; height: 60px; border-radius:50px"
+              disabled
+            />
+          </td>
           {#each { length: 9 } as _, j}
             {#if sameSeat(i, j)}
               <td style="border: none;">
@@ -86,8 +91,27 @@
               </td>
             {/if}
           {/each}
+          <td style="border: none; height: 100%;">
+            <button
+              style="background-color: lightblue; border: 2px solid lightblue;  width: 33.33%; height: 60px; border-radius:50px"
+              disabled
+            />
+          </td>
         </tr>
       {/each}
     </tbody>
   </table>
 </div>
+
+<style>
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  th,
+  td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+</style>
