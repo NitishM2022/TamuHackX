@@ -130,6 +130,12 @@
         <input type="number" name="price" />
 
         <button class="">Confirm</button>
+        <p>
+          <strong
+            >American Airlines must approve your request to sell before your
+            ticket reaches the marketplace</strong
+          >
+        </p>
         <p>Check your dash if your seat was sold</p>
       </form>
     {/if}

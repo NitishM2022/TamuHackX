@@ -22,7 +22,7 @@
 <section id="tables">
   <div class="container">
     {#if data.buy.length > 0}
-      <h2>Seats for Sale</h2>
+      <h2>Approved Seats for Sale</h2>
 
       <table role="grid">
         <thead>
@@ -84,7 +84,7 @@
     {/if}
 
     {#if data.buy.length == 0}
-      <h2>No seats for sale</h2>
+      <h2>No approved seats for sale</h2>
     {/if}
   </div>
 </section>
