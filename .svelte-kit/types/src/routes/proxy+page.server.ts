@@ -16,7 +16,6 @@ export const load = async ({
       .select("flightnumber, date, seatnumber, seat_id")
       .eq("profile_id", uid);
 
-    console.log("seatinfo" + seatInfo);
     // use american airlines api
     const allFlightInfo = [];
 

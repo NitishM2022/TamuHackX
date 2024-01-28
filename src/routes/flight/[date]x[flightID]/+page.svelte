@@ -12,17 +12,8 @@
   const seatsTaken = data.takenSeats;
   const flightCapcity = data.firstFlight.aircraft.passengerCapacity.main;
   const rows: number = flightCapcity / 9;
-  let row, col;
-
-  function propj(j: number) {
-    if (j >= 3) {
-      if (j >= 7) {
-        return j - 2;
-      }
-      return j - 1;
-    }
-    return j;
-  }
+  let row;
+  let col = 0;
 
   function seatName(i: number, j: number) {
     let name: string = "";
@@ -54,88 +45,114 @@
   }
 </script>
 
-<h2>Airplane Seating Chart</h2>
+<div class="container">
+  <div
+    style="display: flex; align-items: center; justify-content: space-between; margin-bottom:2%;"
+  >
+    <h3 style="margin: 0;">Front</h3>
 
-<table>
-  <thead>
-    <tr>
-      <th>Window</th>
-      <td />
-      <th>Middle</th>
-      <td />
-      <th>Window</th>
-    </tr>
-  </thead>
-</table>
-<table>
-  <tbody>
-    {#each { length: rows } as _, i}
+    <!-- Key for seat status -->
+    <div style="display: flex; align-items: center;">
+      <div
+        style="width: 20px; height: 20px; background-color: green; border-radius: 50%; margin-right: 5px;"
+      />
+      <span>Your Seat</span>
+      <div
+        style="width: 20px; height: 20px; background-color: red; border-radius: 50%; margin-left: 20px; margin-right: 5px;"
+      />
+      <span>Taken Seat (You Can Request)</span>
+    </div>
+
+    <!-- Heading -->
+  </div>
+  <table style="border-collapse: collapse; border-radius: 5px; ">
+    <thead>
       <tr>
-        {#each { length: 11 } as _, j}
-          {#if j == 3 || j == 7}
-            <td />
-          {:else if sameSeat(i, propj(j))}
-            <td class="yourSeat">Your seat</td>
-          {:else if someoneSeat(i, propj(j))}
-            <td class="takenSeat">
-              <button on:click={() => handleSwap(i, propj(j))}>
-                Taken (You Must Request)</button
-              >
-            </td>
-          {:else}
-            <td>
-              <form action="?/swapEmpty" method="POST">
-                <input type="hidden" name="uid" value={data.uid} />
-                <input type="hidden" name="i" value={i} />
-                <input type="hidden" name="j" value={propj(j)} />
-                <button class="">{seatName(i, propj(j))}</button>
-              </form>
-            </td>
-          {/if}
-        {/each}
+        <th style="border: none; padding: 10px; ">Window</th>
+        <th
+          style="border: none; padding-left: 10px; padding-right: 10px; background-color: rgb(230, 230, 230);"
+          >Middle</th
+        >
+        <th style="border: none; padding: 10px;">Window</th>
       </tr>
-    {/each}
-  </tbody>
-</table>
+    </thead>
+  </table>
+
+  <table style="border-collapse: collapse;">
+    <tbody style="border: none;">
+      {#each { length: rows } as _, i}
+        <tr style="border: none;">
+          {#each { length: 9 } as _, j}
+            {#if sameSeat(i, j)}
+              <td style="border: none;">
+                <form>
+                  <button
+                    style="background-color: green; color: white; border: 2px solid green;"
+                    disabled
+                  >
+                    {seatName(i, j)}</button
+                  >
+                </form></td
+              >
+            {:else if someoneSeat(i, j)}
+              <td style="border: none;">
+                <form>
+                  <button
+                    on:click={() => handleSwap(i, j)}
+                    style="background-color: red; color: white; border: 2px solid red;"
+                  >
+                    {seatName(i, j)}</button
+                  >
+                </form>
+              </td>
+            {:else}
+              <td style="border: none;">
+                <form action="?/swapEmpty" method="POST">
+                  <input type="hidden" name="uid" value={data.uid} />
+                  <input type="hidden" name="i" value={i} />
+                  <input type="hidden" name="j" value={j} />
+                  <button class="">{seatName(i, j)}</button>
+                </form>
+              </td>
+            {/if}
+          {/each}
+        </tr>
+      {/each}
+    </tbody>
+  </table>
+</div>
 
 <Modal bind:showModal>
   <h2 slot="header">
     Would you like to swap seats with seat {seatName(row, col)}
   </h2>
 
-  <ol class="steps">
-    <li>
-      <form action="?/swapTaken" method="POST">
-        <input type="hidden" name="uid" value={data.uid} />
-        <input
-          type="hidden"
-          name="askerseatnumber"
-          value={data.seatInfo[0].seatnumber}
-        />
-        <input
-          type="hidden"
-          name="flightnumber"
-          value={data.seatInfo[0].flightnumber}
-        />
-        <input
-          type="hidden"
-          name="origin"
-          value={data.firstFlight.origin.city}
-        />
-        <input
-          type="hidden"
-          name="destination"
-          value={data.firstFlight.destination.city}
-        />
-        <input type="hidden" name="date" value={data.seatInfo[0].date} />
-        <input type="hidden" name="seatid" value={data.seatInfo[0].seat_id} />
-        <input type="hidden" name="i" value={row} />
-        <input type="hidden" name="j" value={propj(col)} />
-        <p>If you would like to swap click <button class="">Confirm</button></p>
-      </form>
-    </li>
-    <li>Check your notifications if your swap was approved</li>
-  </ol>
+  <form action="?/swapTaken" method="POST">
+    <input type="hidden" name="uid" value={data.uid} />
+    <input
+      type="hidden"
+      name="askerseatnumber"
+      value={data.seatInfo[0].seatnumber}
+    />
+    <input
+      type="hidden"
+      name="flightnumber"
+      value={data.seatInfo[0].flightnumber}
+    />
+    <input type="hidden" name="origin" value={data.firstFlight.origin.city} />
+    <input
+      type="hidden"
+      name="destination"
+      value={data.firstFlight.destination.city}
+    />
+    <input type="hidden" name="date" value={data.seatInfo[0].date} />
+    <input type="hidden" name="seatid" value={data.seatInfo[0].seat_id} />
+    <input type="hidden" name="i" value={row} />
+    <input type="hidden" name="j" value={col} />
+    <p>If you would like to swap click</p>
+    <button class="">Confirm</button>
+  </form>
+  <p>Check your notifications if your swap was approved</p>
 </Modal>
 
 <style>
@@ -153,9 +170,9 @@
     background-color: #f2f2f2;
   }
   .yourSeat {
-    background-color: green;
+    color: green;
   }
   .takenSeat {
-    background-color: red;
+    color: red;
   }
 </style>

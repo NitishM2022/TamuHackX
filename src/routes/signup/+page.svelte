@@ -20,29 +20,19 @@
   };
 </script>
 
-<div class="login-title">Sign Up</div>
+<div class="container">
+  <hgroup><h1>Sign Up</h1></hgroup>
 
-<div class="login">
   <form action="?/signup" method="POST" class="auth-form" use:enhance>
+    <input type="text" class="name" name="firstname" placeholder="First Name" />
+    <input type="text" class="name" name="lastname" placeholder="Last Name" />
     <input
-      type="text"
-      class="name"
-      name="firstname"
-      placeholder="First Name"
-    /><br />
-    <input
-      type="text"
-      class="name"
-      name="lastname"
-      placeholder="Last Name"
-    /><br />
-    <input
-      type="text"
+      type="hidden"
       class="name"
       name="avatar-url"
       placeholder="Avatar URL"
-    /><br />
-    <input type="text" class="name" name="email" placeholder="Email" /><br />
+    />
+    <input type="text" class="name" name="email" placeholder="Email" />
     <input
       type="password"
       class="name"

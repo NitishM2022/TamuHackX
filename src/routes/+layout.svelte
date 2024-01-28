@@ -3,7 +3,10 @@
   import { invalidate } from "$app/navigation";
   import { onMount } from "svelte";
   import type { LayoutData } from "./$types";
+
+  import "@picocss/pico";
   import "../style.css";
+
   export let data: LayoutData;
   $: ({ supabase, session } = data);
   onMount(() => {
@@ -24,19 +27,19 @@
     <div class="navbar">
       <div class="leftbar">
         <a href="/" class="btn">Dash</a>
-        <a href="/events" class="btn">Buy</a>
-        <a href="/notifications" class="btn">Notifications</a>
+        <a href="/buy" class="btn">Buy</a>
+        <a href="/swaps" class="btn">Swaps</a>
       </div>
       <div class="gap" />
       <div class="rightbar">
         <a href="/logout" class="btn">Logout</a>
-        {#if data.profile}
+        <!-- {#if data.profile}
           <img
             src={data.profile[0].avatar_url}
             alt="Profile"
             class="profile-image"
           />
-        {/if}
+        {/if} -->
       </div>
     </div>
   {:else}

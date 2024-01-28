@@ -84,6 +84,8 @@ export const actions = {
     const j = parseInt(formData.get("j"), 10);
     const newSeat = i * 9 + j;
     console.log(newSeat);
+    console.log(i);
+    console.log(j);
 
     //call seats to get provide id and their seatid
     const { data: provider, error } = await supabase
@@ -101,6 +103,7 @@ export const actions = {
     console.log(date);
     console.log(uid);
     console.log(seatid);
+    console.log(provider);
     console.log(provider[0].profile_id);
     console.log(provider[0].seat_id);
 

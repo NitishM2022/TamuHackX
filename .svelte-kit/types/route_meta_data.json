@@ -9,6 +9,11 @@
 	"/auth/callback": [
 		"src/routes/auth/callback/+server.ts"
 	],
+	"/buy": [
+		"src/routes/buy/+page.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts"
+	],
 	"/flight/[date]x[flightID]": [
 		"src/routes/flight/[date]x[flightID]/+page.server.ts",
 		"src/routes/+layout.ts",
@@ -22,13 +27,13 @@
 	"/logout": [
 		"src/routes/logout/+server.ts"
 	],
-	"/notifications": [
-		"src/routes/notifications/+page.server.ts",
+	"/signup": [
+		"src/routes/signup/+page.server.ts",
 		"src/routes/+layout.ts",
 		"src/routes/+layout.server.ts"
 	],
-	"/signup": [
-		"src/routes/signup/+page.server.ts",
+	"/swaps": [
+		"src/routes/swaps/+page.server.ts",
 		"src/routes/+layout.ts",
 		"src/routes/+layout.server.ts"
 	]
