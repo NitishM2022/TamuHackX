@@ -1,23 +1,46 @@
 // @ts-nocheck
-export const load = async ({ params, parent }: Parameters<PageLoad>[0]) => {
+export const load = async ({
+  params,
+  parent,
+  locals: { supabase },
+}: Parameters<PageLoad>[0]) => {
   const { session } = await parent();
   const uid = session?.user.id;
 
-  const flight = params.flightID;
-  const url = "http://localhost:4000/airports?code=";
+  const date = params.date;
+  const flightnumber = params.flightID;
 
-  fetch(url)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then((data) => console.log(data))
-    .catch((error) => console.error("Error:", error));
+  // use database to get seat number
+  const { data: seatInfo, error } = await supabase
+    .from("seats")
+    .select("seatnumber")
+    .eq("profile_id", uid);
 
+  // use american airline api to get seat numbers
+  const apiUrl = `http://localhost:4000/flights?date=${date}&flightNumber=${flightnumber}`;
+
+  console.log(apiUrl);
+
+  let firstFlight;
+  try {
+    const response = await fetch(apiUrl);
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const flightInfo = await response.json();
+    if (flightInfo.length > 0) {
+      firstFlight = flightInfo[0];
+    }
+  } catch (fetchError) {
+    console.error("Error fetching flight information:", fetchError);
+  }
+
+  console.log(firstFlight);
   return {
     uid,
+    seatInfo,
+    firstFlight,
   };
 };
 

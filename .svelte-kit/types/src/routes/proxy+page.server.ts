@@ -8,16 +8,43 @@ export const load = async ({
 }: Parameters<PageLoad>[0]) => {
   const { session } = await parent();
   const uid = session?.user.id;
+
+  //find flights
   const { data: seatInfo, error } = await supabase
     .from("seats")
     .select("flightnumber, date, seatnumber")
     .eq("profile_id", uid);
 
-  console.log(error);
+  // use american airlines api
+  const allFlightInfo = [];
+
+  for (const seat of seatInfo) {
+    const { date, flightnumber, seatnumber } = seat;
+
+    const apiUrl = `http://localhost:4000/flights?date=${date}&flightNumber=${flightnumber}`;
+
+    try {
+      const response = await fetch(apiUrl);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const flightInfo = await response.json();
+      if (flightInfo.length > 0) {
+        const firstFlight = flightInfo[0];
+
+        // Add the firstFlight to the array
+        allFlightInfo.push(firstFlight);
+      }
+    } catch (fetchError) {
+      console.error("Error fetching flight information:", fetchError);
+    }
+  }
 
   return {
     session,
     seatInfo,
+    allFlightInfo,
   };
 };
 
