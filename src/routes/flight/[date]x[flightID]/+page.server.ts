@@ -1,3 +1,5 @@
+import { supabase } from "$lib/server/supabase";
+
 export const load: PageLoad = async ({
   params,
   parent,
@@ -12,7 +14,7 @@ export const load: PageLoad = async ({
   // use database to get seat number
   const { data: seatInfo, error } = await supabase
     .from("seats")
-    .select("seatnumber, flightnumber, date")
+    .select("seatnumber, flightnumber, date, seat_id")
     .eq("profile_id", uid);
 
   // use database to get list of all taken seats
@@ -71,14 +73,39 @@ export const actions: Actions = {
     const formData = await request.formData();
     const uid = formData.get("uid");
 
+    const askerseatnumber = formData.get("seatnumber");
+    const flightnumber = formData.get("flightnumber");
+    const date = formData.get("date");
+    const seatid = formData.get("seatid");
     const i = parseInt(formData.get("i"), 10);
     const j = parseInt(formData.get("j"), 10);
     const newSeat = i * 9 + j;
+    console.log(newSeat);
 
-    const { data, error } = await supabase
+    //call seats to get provide id and their seatid
+    const { data: provider, error } = await supabase
       .from("seats")
-      .update({ seatnumber: newSeat })
-      .eq("profile_id", uid);
+      .select("seat_id, profile_id")
+      .eq("date", date)
+      .eq("flightnumber", flightnumber)
+      .eq("seatnumber", newSeat);
+
+    console.log(error);
+    console.log(flightnumber);
+    console.log(date);
+    console.log(uid);
+    console.log(seatid);
+    console.log(provider[0].profile_id);
+    console.log(provider[0].seat_id);
+
+    const { error1 } = await supabase.from("offers").insert({
+      flightnumber: flightnumber,
+      date: date,
+      asker_profile_id: uid,
+      asker_seat_number: seatid,
+      provider_profile_id: provider[0].profile_id,
+      provider_seat_number: provider[0].seat_id,
+    });
 
     return {
       success: true,

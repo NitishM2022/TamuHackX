@@ -1,6 +1,5 @@
 <script lang="ts">
   import { enhance } from "$app/forms";
-  import Modal from "../../../components/Modal.svelte";
 
   //popup window
   let showModal = false;
@@ -97,36 +96,6 @@
     {/each}
   </tbody>
 </table>
-
-<Modal bind:showModal>
-  <h2 slot="header">
-    Would you like to swap seats with seat {seatName(row, col)}
-  </h2>
-
-  <ol class="steps">
-    <li>
-      <form action="?/swapTaken" method="POST">
-        <input type="hidden" name="uid" value={data.uid} />
-        <input
-          type="hidden"
-          name="askerseatnumber"
-          value={data.seatInfo[0].seatnumber}
-        />
-        <input
-          type="hidden"
-          name="flightnumber"
-          value={data.seatInfo[0].flightnumber}
-        />
-        <input type="hidden" name="date" value={data.seatInfo[0].date} />
-        <input type="hidden" name="seatid" value={data.seatInfo[0].seat_id} />
-        <input type="hidden" name="i" value={row} />
-        <input type="hidden" name="j" value={propj(col)} />
-        <p>If you would like to swap click <button class="">Confirm</button></p>
-      </form>
-    </li>
-    <li>Check your notifications if your swap was approved</li>
-  </ol>
-</Modal>
 
 <style>
   table {

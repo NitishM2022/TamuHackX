@@ -25,7 +25,7 @@
       <div class="leftbar">
         <a href="/" class="btn">Dash</a>
         <a href="/events" class="btn">Buy</a>
-        <a href="/friends" class="btn">Family</a>
+        <a href="/notifications" class="btn">Notifications</a>
       </div>
       <div class="gap" />
       <div class="rightbar">
