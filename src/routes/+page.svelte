@@ -9,10 +9,9 @@
   <h1>AirSwap</h1>
   <p>Swap seats with other customers</p>
 </div>
-
-<div class="flight">
-  <h1>Your Flights</h1>
-  {#if data?.seatInfo && data?.allFlightInfo}
+{#if data?.seatInfo && data?.allFlightInfo}
+  <div class="flight">
+    <h1>Your Flights</h1>
     <table border="1">
       <thead>
         <tr>
@@ -37,5 +36,5 @@
         {/each}
       </tbody>
     </table>
-  {/if}
-</div>
+  </div>
+{/if}

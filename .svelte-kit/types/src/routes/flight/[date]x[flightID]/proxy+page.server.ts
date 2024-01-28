@@ -13,13 +13,19 @@ export const load = async ({
   // use database to get seat number
   const { data: seatInfo, error } = await supabase
     .from("seats")
-    .select("seatnumber")
+    .select("seatnumber, flightnumber, date")
     .eq("profile_id", uid);
+
+  // use database to get list of all taken seats
+  const { data: takenSeats, error1 } = await supabase
+    .from("seats")
+    .select("seatnumber, profile_id")
+    .neq("profile_id", uid)
+    .eq("flightnumber", seatInfo[0].flightnumber)
+    .eq("date", seatInfo[0].date);
 
   // use american airline api to get seat numbers
   const apiUrl = `http://localhost:4000/flights?date=${date}&flightNumber=${flightnumber}`;
-
-  console.log(apiUrl);
 
   let firstFlight;
   try {
@@ -36,12 +42,32 @@ export const load = async ({
     console.error("Error fetching flight information:", fetchError);
   }
 
-  console.log(firstFlight);
   return {
     uid,
     seatInfo,
     firstFlight,
+    takenSeats,
   };
+};
+
+export const actions = {
+  swapEmpty: async ({ request, locals: { supabase } }: import('./$types').RequestEvent) => {
+    const formData = await request.formData();
+    const uid = formData.get("uid");
+
+    const i = parseInt(formData.get("i"), 10);
+    const j = parseInt(formData.get("j"), 10);
+    const newSeat = i * 9 + j;
+
+    const { data, error } = await supabase
+      .from("seats")
+      .update({ seatnumber: newSeat })
+      .eq("profile_id", uid);
+
+    return {
+      success: true,
+    };
+  },
 };
 
 // export const actions: Actions = {
@@ -79,3 +105,4 @@ export const load = async ({
 //     };
 //   },
 // };
+;null as any as Actions;
