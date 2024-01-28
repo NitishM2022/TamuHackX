@@ -1,0 +1,93 @@
+<script lang="ts">
+  import { enhance } from "$app/forms";
+
+  export let data;
+
+  const flightCapcity = data.firstFlight.aircraft.passengerCapacity.main;
+  const rows: number = flightCapcity / 9;
+  let row;
+  let col = 0;
+
+  console.log("heyyyy" + data.flightnumber);
+
+  function seatName(i: number, j: number) {
+    let name: string = "";
+    name += i;
+    name += String.fromCharCode("A".charCodeAt(0) + j);
+    return name;
+  }
+  function sameSeat(i: number, j: number) {
+    const seat: number = i * 9 + j;
+    if (seat == data.seatnumber) {
+      console.log(data.seatnumber);
+      console.log(i);
+      console.log(j);
+      return true;
+    }
+    return false;
+  }
+</script>
+
+<div class="container">
+  <h1>Flight ID: {data.flightnumber}</h1>
+  <div
+    style="display: flex; align-items: center; justify-content: space-between; margin-bottom:2%;"
+  >
+    <h3 style="margin: 0;">Front</h3>
+
+    <!-- Key for seat status -->
+    <div style="display: flex; align-items: center;">
+      <div
+        style="width: 20px; height: 20px; background-color: green; border-radius: 50%; margin-right: 5px;"
+      />
+      <span>Your Seat</span>
+    </div>
+  </div>
+
+  <!-- Heading -->
+  <table
+    style="border-collapse: collapse; border-radius: 5px; text-align: center;"
+  >
+    <thead>
+      <tr>
+        <th
+          style="border: none; padding: 10px; background-color: #f2f2f2; text-align: center;"
+          >Window</th
+        >
+        <th
+          style="border: none; padding: 10px; background-color: rgb(230, 230, 230); text-align: center;"
+          >Middle</th
+        >
+        <th
+          style="border: none; padding: 10px; background-color: #f2f2f2; text-align: center;"
+          >Window</th
+        >
+      </tr>
+    </thead>
+  </table>
+
+  <table style="border-collapse: collapse;">
+    <tbody style="border: none;">
+      {#each { length: rows } as _, i}
+        <tr style="border: none;">
+          {#each { length: 9 } as _, j}
+            {#if sameSeat(i, j)}
+              <td style="border: none;">
+                <button
+                  style="background-color: green; color: white; border: 2px solid green;"
+                  disabled
+                >
+                  {seatName(i, j)}</button
+                >
+              </td>
+            {:else}
+              <td style="border: none;">
+                <button class="" disabled>{seatName(i, j)}</button>
+              </td>
+            {/if}
+          {/each}
+        </tr>
+      {/each}
+    </tbody>
+  </table>
+</div>

@@ -21,7 +21,7 @@
 </script>
 
 <div class="container">
-  <hgroup><h1>Sign Up</h1></hgroup>
+  <h1>Sign Up</h1>
 
   <form action="?/signup" method="POST" class="auth-form" use:enhance>
     <input type="text" class="name" name="firstname" placeholder="First Name" />

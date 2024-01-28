@@ -20,7 +20,7 @@
 
 <div class="container">
   {#if data.confirmnoti.length > 0}
-    <hgroup><h2>Confirm or Deny</h2></hgroup>
+    <h2>Confirm or Deny</h2>
 
     <section id="tables">
       <table role="grid">
@@ -34,6 +34,7 @@
             <th>Current Seat</th>
             <th>Confirm</th>
             <th>Deny</th>
+            <th>View New Seat</th>
           </tr>
         </thead>
         <tbody>
@@ -77,6 +78,15 @@
                   <button>Deny</button>
                 </form></td
               >
+              <td
+                ><form>
+                  <button
+                    type="reset"
+                    onclick="location.href='/view/{flightnumber}x{date}x{asker_seat_number}'"
+                    >->></button
+                  >
+                </form></td
+              >
             </tr>
           {/each}
         </tbody>
@@ -85,7 +95,7 @@
   {/if}
 
   {#if data.viewnoti.length > 0}
-    <hgroup><h1>Potential Swaps</h1></hgroup>
+    <h1>Potential Swaps</h1>
 
     <section id="tables">
       <table role="grid">

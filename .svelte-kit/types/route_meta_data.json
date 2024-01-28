@@ -36,5 +36,10 @@
 		"src/routes/swaps/+page.server.ts",
 		"src/routes/+layout.ts",
 		"src/routes/+layout.server.ts"
+	],
+	"/view/[flightid]x[date]x[seatnumber]": [
+		"src/routes/view/[flightid]x[date]x[seatnumber]/+page.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts"
 	]
 }

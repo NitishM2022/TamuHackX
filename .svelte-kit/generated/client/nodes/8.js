@@ -1,0 +1,1 @@
+export { default as component } from "../../../../src/routes/view/[flightid]x[date]x[seatnumber]/+page.svelte";

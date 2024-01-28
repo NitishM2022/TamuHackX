@@ -46,6 +46,7 @@
 </script>
 
 <div class="container">
+  <h1>Flight ID: {data.seatInfo[0].flightnumber}</h1>
   <div
     style="display: flex; align-items: center; justify-content: space-between; margin-bottom:2%;"
   >
@@ -62,8 +63,6 @@
       />
       <span>Taken Seat (You Can Request)</span>
     </div>
-
-    <!-- Heading -->
   </div>
   <table style="border-collapse: collapse; border-radius: 5px; ">
     <thead>

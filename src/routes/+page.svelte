@@ -44,7 +44,8 @@
                 <th>Flight Number</th>
                 <th>Seat Number</th>
                 <th>Swap Seats</th>
-                <th>Sell Seat</th>
+                <th>Sell Your Seat</th>
+                <th>View Seat</th>
               </tr>
             </thead>
             <tbody>
@@ -64,6 +65,13 @@
                   >
                   <td
                     ><button on:click={() => handleSell(i)} class="btn"
+                      >->></button
+                    ></td
+                  >
+                  <td
+                    ><button
+                      type="reset"
+                      onclick="location.href='/view/{flightnumber}x{date}x{seatnumber}'"
                       >->></button
                     ></td
                   >
