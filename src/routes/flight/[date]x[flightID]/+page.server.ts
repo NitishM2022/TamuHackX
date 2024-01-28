@@ -67,6 +67,23 @@ export const actions: Actions = {
       success: true,
     };
   },
+  swapTaken: async ({ request, locals: { supabase } }) => {
+    const formData = await request.formData();
+    const uid = formData.get("uid");
+
+    const i = parseInt(formData.get("i"), 10);
+    const j = parseInt(formData.get("j"), 10);
+    const newSeat = i * 9 + j;
+
+    const { data, error } = await supabase
+      .from("seats")
+      .update({ seatnumber: newSeat })
+      .eq("profile_id", uid);
+
+    return {
+      success: true,
+    };
+  },
 };
 
 // export const actions: Actions = {

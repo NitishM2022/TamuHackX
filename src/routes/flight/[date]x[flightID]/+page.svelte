@@ -104,8 +104,15 @@
   </h2>
 
   <ol class="steps">
-    <li>If you would like to swap click <button>Confirm</button></li>
-    <li>Check back every couple of days to see if you swap was accepted</li>
+    <li>
+      <form action="?/swapTaken" method="POST">
+        <input type="hidden" name="uid" value={data.uid} />
+        <input type="hidden" name="i" value={row} />
+        <input type="hidden" name="j" value={propj(col)} />
+        <p>If you would like to swap click <button class="">Confirm</button></p>
+      </form>
+    </li>
+    <li>Check your notifications if your swap was approved</li>
   </ol>
 </Modal>
 
