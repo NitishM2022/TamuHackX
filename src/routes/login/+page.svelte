@@ -9,7 +9,7 @@
 </script>
 
 <div class="container">
-  <h1 class="">Login</h1>
+  <h1 class="">Log In</h1>
 
   <form action="?/login" method="POST" class="auth-form" use:enhance>
     <input type="text" class="name" name="email" placeholder="Email" />

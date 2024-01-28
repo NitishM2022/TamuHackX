@@ -29,7 +29,11 @@
 </script>
 
 <div class="container">
-  <h1>Flight ID: {data.flightnumber}</h1>
+  <hgroup>
+    <h1>Flight ID: {data.flightnumber}</h1>
+    <h1>Date: {data.date}</h1>
+  </hgroup>
+
   <div
     style="display: flex; align-items: center; justify-content: space-between; margin-bottom:2%;"
   >

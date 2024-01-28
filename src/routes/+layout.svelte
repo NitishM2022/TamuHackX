@@ -32,7 +32,7 @@
       </div>
       <div class="gap" />
       <div class="rightbar">
-        <a href="/logout" class="btn">Logout</a>
+        <a href="/logout" class="btn">Log Out</a>
         <!-- {#if data.profile}
           <img
             src={data.profile[0].avatar_url}
@@ -49,7 +49,7 @@
       </div>
       <div class="gap" />
       <div class="rightbar">
-        <a href="/login" class="btn">Login</a>
+        <a href="/login" class="btn">Log In</a>
         <a href="/signup" class="btn">Sign up</a>
       </div>
     </div>

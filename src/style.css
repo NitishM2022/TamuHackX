@@ -7,9 +7,10 @@ body {
 .navbar {
   display: flex;
   background-color: white;
-  border-bottom: 2px solid black;
+  border-bottom: 1px solid black;
   overflow: hidden;
   margin-bottom: 2%;
+  font-weight: 500;
 }
 
 .navbar a {

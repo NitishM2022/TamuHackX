@@ -46,7 +46,11 @@
 </script>
 
 <div class="container">
-  <h1>Flight ID: {data.seatInfo[0].flightnumber}</h1>
+  <hgroup>
+    <h1>Flight ID: {data.seatInfo[0].flightnumber}</h1>
+    <h1>Date: {data.seatInfo[0].date}</h1>
+  </hgroup>
+
   <div
     style="display: flex; align-items: center; justify-content: space-between; margin-bottom:2%;"
   >
@@ -69,9 +73,18 @@
   >
     <thead>
       <tr>
-        <th style="border: none; padding: 10px;">Window</th>
-        <th style="border: none; padding: 10px;">Middle</th>
-        <th style="border: none; padding: 10px;">Window</th>
+        <th
+          style="border: none; padding: 10px; background-color: #f2f2f2; text-align: center;"
+          >Window</th
+        >
+        <th
+          style="border: none; padding: 10px; background-color: rgb(230, 230, 230); text-align: center;"
+          >Middle</th
+        >
+        <th
+          style="border: none; padding: 10px; background-color: #f2f2f2; text-align: center;"
+          >Window</th
+        >
       </tr>
     </thead>
   </table>
