@@ -26,7 +26,7 @@
   {#if data.session}
     <div class="navbar">
       <div class="leftbar">
-        <a href="/" class="btn">Dash</a>
+        <a href="/" class="btn">Dashboard</a>
         <a href="/buy" class="btn">Buy</a>
         <a href="/swaps" class="btn">Swaps</a>
       </div>

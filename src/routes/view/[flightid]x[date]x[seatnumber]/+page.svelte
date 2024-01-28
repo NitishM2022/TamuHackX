@@ -89,10 +89,26 @@
                   {seatName(i, j)}</button
                 >
               </td>
+              {#if j == 2 || j == 5}
+                <td style="border: none;">
+                  <button
+                    style="background-color: white; border: 2px solid white;  "
+                    disabled
+                  />
+                </td>
+              {/if}
             {:else}
               <td style="border: none;">
                 <button class="" disabled>{seatName(i, j)}</button>
               </td>
+              {#if j == 2 || j == 5}
+                <td style="border: none;">
+                  <button
+                    style="background-color: white; border: 2px solid white;  "
+                    disabled
+                  />
+                </td>
+              {/if}
             {/if}
           {/each}
           <td style="border: none; height: 100%;">
