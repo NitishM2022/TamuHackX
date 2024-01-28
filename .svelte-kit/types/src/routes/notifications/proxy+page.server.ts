@@ -12,101 +12,76 @@ export const load = async ({
   const date = params.date;
   const flightnumber = params.flightID;
 
-  // use database to get seat number
-  const { data: seatInfo, error } = await supabase
-    .from("seats")
-    .select("seatnumber, flightnumber, date, seat_id")
-    .eq("profile_id", uid);
+  // use database to get confirm or decline noti
+  const { data: confirmnoti, error } = await supabase
+    .from("offers")
+    .select()
+    .eq("provider_profile_id", uid)
+    .is("status", null);
 
-  // use database to get list of all taken seats
-  const { data: takenSeats, error1 } = await supabase
-    .from("seats")
-    .select("seatnumber, profile_id")
-    .neq("profile_id", uid)
-    .eq("flightnumber", seatInfo[0].flightnumber)
-    .eq("date", seatInfo[0].date);
-
-  // use american airline api to get seat numbers
-  const apiUrl = `http://localhost:4000/flights?date=${date}&flightNumber=${flightnumber}`;
-
-  let firstFlight;
-  try {
-    const response = await fetch(apiUrl);
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-    const flightInfo = await response.json();
-    if (flightInfo.length > 0) {
-      firstFlight = flightInfo[0];
-    }
-  } catch (fetchError) {
-    console.error("Error fetching flight information:", fetchError);
-  }
+  // use database to get view noti
+  const { data: viewnoti, error1 } = await supabase
+    .from("offers")
+    .select()
+    .eq("asker_profile_id", uid);
 
   return {
     uid,
-    seatInfo,
-    firstFlight,
-    takenSeats,
+    confirmnoti,
+    viewnoti,
   };
 };
 
 export const actions = {
-  swapEmpty: async ({ request, locals: { supabase } }: import('./$types').RequestEvent) => {
+  confirm: async ({ request, locals: { supabase } }: import('./$types').RequestEvent) => {
     const formData = await request.formData();
-    const uid = formData.get("uid");
+    const offerid = formData.get("offerid");
+    const askerprofileid = formData.get("askerprofileid");
+    const askerseatid = formData.get("askerseatid");
+    const providerprofileid = formData.get("providerprofileid");
+    const providerseatid = formData.get("providerseatid");
 
-    const i = parseInt(formData.get("i"), 10);
-    const j = parseInt(formData.get("j"), 10);
-    const newSeat = i * 9 + j;
+    console.log(askerprofileid);
+    console.log(providerprofileid);
 
-    const { data, error } = await supabase
+    console.log(askerseatid);
+    console.log(providerseatid);
+
+    // switch them
+    const { error1 } = await supabase
       .from("seats")
-      .update({ seatnumber: newSeat })
-      .eq("profile_id", uid);
+      .update({ profile_id: providerprofileid })
+      .eq("seat_id", askerseatid);
+
+    console.log("error1" + error1);
+
+    // switch them
+    const { error } = await supabase
+      .from("seats")
+      .update({ profile_id: askerprofileid })
+      .eq("seat_id", providerseatid);
+
+    console.log("error" + error);
+
+    // made the offer accepted
+    const { error2 } = await supabase
+      .from("offers")
+      .update({ status: "accepted" })
+      .eq("offer_id", offerid);
 
     return {
       success: true,
     };
   },
-  swapTaken: async ({ request, locals: { supabase } }: import('./$types').RequestEvent) => {
+  deny: async ({ request, locals: { supabase } }: import('./$types').RequestEvent) => {
     const formData = await request.formData();
-    const uid = formData.get("uid");
+    const offerid = formData.get("offerid");
 
-    const askerseatnumber = formData.get("seatnumber");
-    const flightnumber = formData.get("flightnumber");
-    const date = formData.get("date");
-    const seatid = formData.get("seatid");
-    const i = parseInt(formData.get("i"), 10);
-    const j = parseInt(formData.get("j"), 10);
-    const newSeat = i * 9 + j;
-    console.log(newSeat);
-
-    //call seats to get provide id and their seatid
-    const { data: provider, error } = await supabase
-      .from("seats")
-      .select("seat_id, profile_id")
-      .eq("date", date)
-      .eq("flightnumber", flightnumber)
-      .eq("seatnumber", newSeat);
-
-    console.log(error);
-    console.log(flightnumber);
-    console.log(date);
-    console.log(uid);
-    console.log(seatid);
-    console.log(provider[0].profile_id);
-    console.log(provider[0].seat_id);
-
-    const { error1 } = await supabase.from("offers").insert({
-      flightnumber: flightnumber,
-      date: date,
-      asker_profile_id: uid,
-      asker_seat_number: seatid,
-      provider_profile_id: provider[0].profile_id,
-      provider_seat_number: provider[0].seat_id,
-    });
+    // made the offer denied
+    const { data, error2 } = await supabase
+      .from("offers")
+      .update({ status: "denied" })
+      .eq("offer_id", offerid);
 
     return {
       success: true,

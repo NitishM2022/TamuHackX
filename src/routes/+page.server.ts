@@ -12,9 +12,10 @@ export const load: PageLoad = async ({
     //find flights
     const { data: seatInfo, error } = await supabase
       .from("seats")
-      .select("flightnumber, date, seatnumber")
+      .select("flightnumber, date, seatnumber, seat_id")
       .eq("profile_id", uid);
 
+    console.log("seatinfo" + seatInfo);
     // use american airlines api
     const allFlightInfo = [];
 
@@ -42,6 +43,7 @@ export const load: PageLoad = async ({
     }
 
     return {
+      uid,
       session,
       seatInfo,
       allFlightInfo,
@@ -53,38 +55,40 @@ export const load: PageLoad = async ({
   };
 };
 
-// export const actions: Actions = {
-//   search: async ({ request, locals: { supabase } }) => {
-//     const formData = await request.formData();
-//     const city = formData.get("city");
-//     const uid = formData.get("uid");
+export const actions: Actions = {
+  sellSeat: async ({ request, locals: { supabase } }) => {
+    const formData = await request.formData();
+    const origin = formData.get("origin");
+    const destination = formData.get("destination");
+    const flightnumber = formData.get("flightnumber");
+    const date = formData.get("date");
+    const uid = formData.get("uid");
+    const seatnumber = formData.get("seatnumber");
+    const seatid = formData.get("seatid");
+    const price = parseInt(formData.get("price"), 10);
 
-//     const { data: found, error } = await supabase.rpc(
-//       "get_events_with_following_attendees",
-//       {
-//         user_id: uid,
-//         user_city: city,
-//       }
-//     );
+    console.log(origin);
+    console.log(destination);
+    console.log(seatnumber);
+    console.log(flightnumber);
+    console.log(date);
+    console.log(uid);
+    console.log(seatid);
 
-//     console.log(found);
-//     console.log(error);
-//     return {
-//       success: true,
-//       found,
-//     };
-//   },
-//   rsvp: async ({ request, locals: { supabase } }) => {
-//     const formData = await request.formData();
-//     const uid = formData.get("uid");
-//     const eventId = formData.get("event_id");
+    const { error } = await supabase.from("market").insert({
+      origin: origin,
+      destination: destination,
+      flightnumber: flightnumber,
+      date: date,
+      asker_profile_id: uid,
+      asker_seat_number: seatnumber,
+      asker_seat_id: seatid,
+      price: price,
+    });
 
-//     const { error } = await supabase
-//       .from("attending")
-//       .insert({ event_id: eventId, person_id: uid });
-//     console.log(error);
-//     return {
-//       success: error == null,
-//     };
-//   },
-// };
+    console.log(error);
+    return {
+      success: true,
+    };
+  },
+};

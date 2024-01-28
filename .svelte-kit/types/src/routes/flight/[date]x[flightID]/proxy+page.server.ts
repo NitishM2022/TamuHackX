@@ -74,7 +74,9 @@ export const actions = {
     const formData = await request.formData();
     const uid = formData.get("uid");
 
-    const askerseatnumber = formData.get("seatnumber");
+    const origin = formData.get("origin");
+    const destination = formData.get("destination");
+    const askerseatnumber = formData.get("askerseatnumber");
     const flightnumber = formData.get("flightnumber");
     const date = formData.get("date");
     const seatid = formData.get("seatid");
@@ -91,6 +93,9 @@ export const actions = {
       .eq("flightnumber", flightnumber)
       .eq("seatnumber", newSeat);
 
+    console.log(origin);
+    console.log(destination);
+    console.log(askerseatnumber);
     console.log(error);
     console.log(flightnumber);
     console.log(date);
@@ -100,12 +105,16 @@ export const actions = {
     console.log(provider[0].seat_id);
 
     const { error1 } = await supabase.from("offers").insert({
+      origin: origin,
+      destination: destination,
       flightnumber: flightnumber,
       date: date,
       asker_profile_id: uid,
-      asker_seat_number: seatid,
+      asker_seat_number: askerseatnumber,
+      asker_seat_id: seatid,
       provider_profile_id: provider[0].profile_id,
-      provider_seat_number: provider[0].seat_id,
+      provider_seat_number: newSeat,
+      provider_seat_id: provider[0].seat_id,
     });
 
     return {

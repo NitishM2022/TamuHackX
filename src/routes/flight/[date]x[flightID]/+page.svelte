@@ -117,6 +117,16 @@
           name="flightnumber"
           value={data.seatInfo[0].flightnumber}
         />
+        <input
+          type="hidden"
+          name="origin"
+          value={data.firstFlight.origin.city}
+        />
+        <input
+          type="hidden"
+          name="destination"
+          value={data.firstFlight.destination.city}
+        />
         <input type="hidden" name="date" value={data.seatInfo[0].date} />
         <input type="hidden" name="seatid" value={data.seatInfo[0].seat_id} />
         <input type="hidden" name="i" value={row} />
