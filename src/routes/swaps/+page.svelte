@@ -20,7 +20,7 @@
 
 <div class="container">
   {#if data.confirmnoti.length > 0}
-    <h2>Confirm or Deny</h2>
+    <h2>Accept Swap</h2>
 
     <section id="tables">
       <table role="grid">
@@ -95,7 +95,7 @@
   {/if}
 
   {#if data.viewnoti.length > 0}
-    <h1>Potential Swaps</h1>
+    <h1>History of Swaps</h1>
 
     <section id="tables">
       <table role="grid">

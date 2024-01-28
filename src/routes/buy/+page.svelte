@@ -8,9 +8,11 @@
   export let form;
 
   function seatName(seatNumber: number) {
+    console.log(seatNumber);
     let name: string = "";
     name += Math.floor(seatNumber / 9);
     name += String.fromCharCode("A".charCodeAt(0) + (seatNumber % 9));
+    console.log(name);
     return name;
   }
 
