@@ -2,6 +2,7 @@
   import { enhance } from "$app/forms";
   import type { PageData } from "./$types";
   import Modal from "../components/Modal.svelte";
+  import aaimg from "../images/aa.png";
 
   let showModal = false;
   let curri: number = 0;
@@ -25,7 +26,11 @@
 <div class="container">
   <hgroup>
     <h1>AeroTrade</h1>
-    <p>Powered by American Airlines</p>
+    <div style="display: flex; align-items: center;">
+      <p style="margin: 0;">Powered by</p>
+      <!-- Your image here -->
+      <img src={aaimg} alt="Image" style="margin-left: 5px; height: 30px;" />
+    </div>
   </hgroup>
   {#if data.seatInfo && data?.seatInfo.length > 0 && data.allFlightInfo && data?.allFlightInfo.length > 0}
     <div class="flight">
